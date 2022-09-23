@@ -50,12 +50,33 @@ body {
 
 .screen {
     display: flex;
+    justify-content: right;
+    align-items: center;
     height: 100px;
     width: 410px;
     background-color: #96c08d;
     border: 2px solid #666666;
     border-radius: 25px;
 
+}
+
+.screen-text {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 90px;
+    width: 410px;
+    padding-right: 15px;
+}
+
+.number-display {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 90px;
+    font-size: 42px;
+    font-weight: 400;
+    color: #666666;
 }
 
 .buttons {
