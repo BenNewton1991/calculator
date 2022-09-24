@@ -84,9 +84,7 @@ delete_event.addEventListener('click', function(){
   }  else {
     screen_array_2 = screen_array_2.slice(0, -1)
     update_screen(screen_array_2);
-
   }
-  
 })
 
 
@@ -107,7 +105,13 @@ equals_event.addEventListener('click', function () {
         sum = arr_1_int * arr_2_int;
 
     } else if (current_operation == 'd') {
-        sum = arr_1_int / arr_2_int;
+        console.log('d')
+        if (arr_2_int == 0 || arr_1_int == 0) {
+            sum = '(+_+)'
+        } else {
+            sum = arr_1_int / arr_2_int;
+
+        }
 
     } else if (current_operation == 's') {
         sum = arr_1_int - arr_2_int;
@@ -122,8 +126,9 @@ equals_event.addEventListener('click', function () {
 
     update_screen(sum);
     current_operation = ''
-    screen_array_1 = '';
-    screen_array_2 = ''
+    screen_array_1 = sum;
+    array_1 = true;
+    screen_array_2 = '';
     sum = 'ERROR';
 })
 
