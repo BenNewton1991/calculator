@@ -1,14 +1,15 @@
 let screen_array_1 = ''
 let screen_array_2 = ''
 let current_operation = ''
+let max = 9999999999999999
 let array_1 = true;
+let can_add_point = true;
 let final_display = ''
 
 function update_screen (screen_array) {
     const screen = document.getElementById('number-display')
     screen.textContent = screen_array;
 }
-update_screen(screen_array_1);
 
 
 
@@ -31,6 +32,7 @@ multiply_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
     }
+    can_add_point = true;
     current_operation = 'm';
 })
 
@@ -41,6 +43,7 @@ divide_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
     }
+    can_add_point = true;
     current_operation = 'd';
 })
 
@@ -51,6 +54,7 @@ subtract_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
     }
+    can_add_point = true;
     current_operation = 's';
 })
 
@@ -61,6 +65,7 @@ add_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
     }
+    can_add_point = true;
     current_operation = 'a';
 })
 
@@ -71,6 +76,7 @@ exponential_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
     }
+    can_add_point = true;
     current_operation = 'e';
 })
 
@@ -79,9 +85,16 @@ exponential_event.addEventListener('click', function(){
 const delete_event = document.getElementById('del')
 delete_event.addEventListener('click', function(){
   if (array_1 == true && screen_array_1 != '') {
+    if (screen_array_1.slice(0, -1) == '.') {
+        can_add_point = true;
+    }
     screen_array_1 = screen_array_1.slice(0, -1)
+    
     update_screen(screen_array_1);
   }  else {
+    if (screen_array_2.slice(0, -1) == '.') {
+        can_add_point = true;
+    }
     screen_array_2 = screen_array_2.slice(0, -1)
     update_screen(screen_array_2);
   }
@@ -96,12 +109,16 @@ delete_event.addEventListener('click', function(){
 const equals_event = document.getElementById('equals')
 equals_event.addEventListener('click', function () {
 
-    let arr_1_int = parseInt(screen_array_1);
-    let arr_2_int = parseInt(screen_array_2);
+    let arr_1_int = parseFloat(screen_array_1);
+    let arr_2_int = parseFloat(screen_array_2);
 
     let sum = 'ERROR';
 
+
+    // Checks operation
+
     if (current_operation == 'm') {
+
         sum = arr_1_int * arr_2_int;
 
     } else if (current_operation == 'd') {
@@ -124,9 +141,29 @@ equals_event.addEventListener('click', function () {
 
     }
 
-    update_screen(sum);
-    current_operation = ''
-    screen_array_1 = sum;
+
+
+    current_operation = '';
+
+    // Checks length of number and updates screen as appropriate. 
+
+    if (sum <= max && sum.toString().length < 17) {
+        screen_array_1 = sum;
+        update_screen(sum);
+        for (let i = 0; i <= sum.toString().length; i++){
+            if (sum.toString()[i] == '.') {
+                can_add_point = false;
+            }
+        }
+
+    } 
+    else {
+        screen_array_1 = ''
+        console.log(sum.toString().length)
+        update_screen('OVERFLOW')
+        can_add_point = true;
+
+    }
     array_1 = true;
     screen_array_2 = '';
     sum = 'ERROR';
@@ -138,7 +175,7 @@ equals_event.addEventListener('click', function () {
 const buttons = document.getElementsByClassName('btn_1')
 
 Array.from(buttons).forEach(function(element) {
-    element.addEventListener('click', function(a){
+    element.addEventListener('click', function(){
         
         const text = element.textContent;
         if (array_1 == true) {
@@ -157,3 +194,31 @@ Array.from(buttons).forEach(function(element) {
     })
 })
 
+// Adds functionality to point
+
+const point = document.getElementById('point')
+
+point.addEventListener('click', function(){
+
+
+    if (can_add_point == true) {
+        can_add_point = false;
+        const text = point.textContent;
+        if (array_1 == true) {
+            
+            screen_array_1 += text;
+            screen_array_1 = screen_array_1.replace(/\s/g, '');
+            console.log(screen_array_1)
+            console.log(screen_array_2)
+            update_screen(screen_array_1);
+        } else {
+            screen_array_2 += text;
+            screen_array_2 = screen_array_2.replace(/\s/g, '');
+            console.log(screen_array_1)
+            console.log(screen_array_2)
+            update_screen(screen_array_2);
+        }
+        
+    }
+        
+    })

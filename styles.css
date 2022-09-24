@@ -120,7 +120,7 @@ body {
     height: 425px;
 }
 
-.btn_1, .btn_2{
+.btn_1, .btn_2, .btn_3{
     display: flex;
     justify-content: center;
     align-items: center;
