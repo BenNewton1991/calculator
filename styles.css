@@ -112,7 +112,7 @@ body {
 
 }
 
-.btn_1:hover, .btn_2:hover {
+.btn_1:hover, .btn_2:hover, .btn_3:hover {
     background-color: #AAAAAA;
     transform:scale(1.025);
 
