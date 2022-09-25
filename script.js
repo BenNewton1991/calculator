@@ -1,10 +1,10 @@
-let screen_array_1 = ''
-let screen_array_2 = ''
-let current_operation = ''
-let max = 9999999999999999
+let screen_array_1 = '';
+let screen_array_2 = '';
+let current_operation = '';
+let max = 9999999999999999;
 let array_1 = true;
 let can_add_point = true;
-let final_display = ''
+let final_display = '';
 
 function update_screen (screen_array) {
     const screen = document.getElementById('number-display')
@@ -19,6 +19,7 @@ const clear = document.getElementById('clear')
 clear.addEventListener('click',  function() {
     screen_array_1 = ''
     screen_array_2 = ''
+    current_operation = ''
     update_screen(screen_array_1)
 })
 
@@ -31,7 +32,13 @@ const multiply_event = document.getElementById('multiply')
 multiply_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
+    } else {
+        equal()
+        array_1 == true ? array_1 = false : array_1 = true;
     }
+
+
+
     can_add_point = true;
     current_operation = 'm';
 })
@@ -41,6 +48,9 @@ multiply_event.addEventListener('click', function(){
 const divide_event = document.getElementById('divide')
 divide_event.addEventListener('click', function(){
     if (current_operation == ''){
+        array_1 == true ? array_1 = false : array_1 = true;
+    } else {
+        equal()
         array_1 == true ? array_1 = false : array_1 = true;
     }
     can_add_point = true;
@@ -53,6 +63,9 @@ const subtract_event = document.getElementById('subtract')
 subtract_event.addEventListener('click', function(){
     if (current_operation == ''){
         array_1 == true ? array_1 = false : array_1 = true;
+    } else {
+        equal()
+        array_1 == true ? array_1 = false : array_1 = true;
     }
     can_add_point = true;
     current_operation = 's';
@@ -63,6 +76,9 @@ subtract_event.addEventListener('click', function(){
 const add_event = document.getElementById('add')
 add_event.addEventListener('click', function(){
     if (current_operation == ''){
+        array_1 == true ? array_1 = false : array_1 = true;
+    } else {
+        equal()
         array_1 == true ? array_1 = false : array_1 = true;
     }
     can_add_point = true;
@@ -101,18 +117,57 @@ delete_event.addEventListener('click', function(){
 })
 
 
+// Positve / Negative 
+
+const pos_neg = document.getElementById('pos-neg');
+pos_neg.addEventListener('click', function () {
+    if (array_1 == true) {
+        if (parseFloat(screen_array_1) > 0 ){
+            screen_array_1 = -screen_array_1
+            update_screen(screen_array_1)
+            
+        } else {
+            screen_array_2 = Math.abs(screen_array_2)
+            update_screen(screen_array_2)
+        }
+    } else {
+        if (parseFloat(screen_array_2) > 0 ){
+            screen_array_2 = -screen_array_2
+            update_screen(screen_array_2)
+            
+        } else {
+            screen_array_2 = Math.abs(screen_array_2)
+            update_screen(screen_array_2)
+        }
+
+    }
+
+
+    })
+ 
 
 
 
-// Equals
+
+
+// Equals -- need to convert to a function and add if operator is present. 
 
 const equals_event = document.getElementById('equals')
-equals_event.addEventListener('click', function () {
+equals_event.addEventListener('click', equal)
+
+
+
+
+
+
+// Equals function
+
+function equal () {
 
     let arr_1_int = parseFloat(screen_array_1);
     let arr_2_int = parseFloat(screen_array_2);
 
-    let sum = 'ERROR';
+    let sum = arr_1_int;
 
 
     // Checks operation
@@ -156,18 +211,42 @@ equals_event.addEventListener('click', function () {
             }
         }
 
-    } 
-    else {
-        screen_array_1 = ''
-        console.log(sum.toString().length)
+    } else if (sum > max){
         update_screen('OVERFLOW')
+        if (sum.toString()[i] == '.') {
+            can_add_point = false;
+        }
+    }
+    else {
+        if (sum.toString().length > 15)
+        {
+            sum = Math.round(sum * 10) / 10;
+
+        }
+
+        console.log(typeof(sum));
+        screen_array_1 = sum;
+        screen_array_2 = '';
+
+        update_screen(sum);
+        for (let i = 0; i <= sum.toString().length; i++){
+            if (sum.toString()[i] == '.') {
+                can_add_point = false;
+            }
+        }
+
         can_add_point = true;
 
     }
+
     array_1 = true;
     screen_array_2 = '';
     sum = 'ERROR';
-})
+
+
+}
+
+
 
 
 // Adds click functionality to numbers
