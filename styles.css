@@ -28,8 +28,15 @@ body {
 }
 
 #clear, #del {
-    background-color: darkgoldenrod;
+    background-color: #BB8833;
 }
+
+#clear:hover, #del:hover {
+    background-color: #d19c57;
+    transform:scale(1.025);
+
+}
+
 
 
 .calculator-container {
@@ -50,7 +57,6 @@ body {
     border-radius: 25px;
     width: 465px;
     height: 675px;
-    cursor: default;
 
 }
 
@@ -101,6 +107,14 @@ body {
     background-color: #666666;
     border: 2px solid #666666;
     border-radius: 25px;
+    cursor: default;
+
+
+}
+
+.btn_1:hover, .btn_2:hover {
+    background-color: #AAAAAA;
+    transform:scale(1.025);
 
 }
 
@@ -125,8 +139,6 @@ body {
     font-weight: 200;
     color: #FFFFFF;
     border-radius: 10px;
-
-
 }
 
 .btn-text, #clear, #del{
